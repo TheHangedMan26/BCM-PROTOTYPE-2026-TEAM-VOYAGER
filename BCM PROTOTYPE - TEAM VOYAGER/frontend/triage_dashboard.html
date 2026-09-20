@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCM — Bank Statement Financial Health Triage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #FAF7F1;
+      --surface-card: #FFFFFF;
+      --surface-elevated: #F3EFE6;
+      --evergreen: #0E3B2E;
+      --evergreen-dark: #07221A;
+      --sage: #5FB88A;
+      --sage-light: #EBF7F1;
+      --charcoal: #2C2A28;
+      --charcoal-muted: #6B6864;
+      --border-subtle: rgba(44, 42, 40, 0.12);
+      --border-focus: #0E3B2E;
+      --flag-green: #107C41;
+      --flag-green-bg: #E7F6ED;
+      --flag-green-border: #A3E3BE;
+      --flag-yellow: #B27B00;
+      --flag-yellow-bg: #FEF7E6;
+      --flag-yellow-border: #FCD680;
+      --flag-red: #C5221F;
+      --flag-red-bg: #FCE8E6;
+      --flag-red-border: #F7A8A3;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 6px rgba(14, 59, 46, 0.05);
+      --shadow-md: 0 8px 24px rgba(14, 59, 46, 0.08);
+      --shadow-lg: 0 16px 40px rgba(14, 59, 46, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--charcoal);
+      line-height: 1.5;
+      padding-bottom: 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      background: var(--evergreen);
+      color: var(--sage);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 1px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--evergreen);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--charcoal-muted);
+      font-weight: 500;
+    }
+
+    .nav-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sage);
+      box-shadow: 0 0 0 3px rgba(95, 184, 138, 0.25);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 28px auto 0;
+      padding: 0 24px;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: var(--evergreen);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(95, 184, 138, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--sage);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 820px;
+    }
+
+    /* Persona Switcher Bar */
+    .preset-selector-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .preset-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .preset-heading {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .preset-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .preset-btn {
+      background: var(--bg-canvas);
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .preset-btn:hover {
+      background: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      background: #FFFFFF;
+      border-color: var(--evergreen);
+      box-shadow: var(--shadow-md);
+    }
+
+    .preset-btn.active.green { border-color: var(--flag-green); }
+    .preset-btn.active.yellow { border-color: var(--flag-yellow); }
+    .preset-btn.active.red { border-color: var(--flag-red); }
+
+    .preset-flag-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .preset-info {
+      flex: 1;
+    }
+
+    .preset-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .preset-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .preset-badge.green { background: var(--flag-green-bg); color: var(--flag-green); border: 1px solid var(--flag-green-border); }
+    .preset-badge.yellow { background: var(--flag-yellow-bg); color: var(--flag-yellow); border: 1px solid var(--flag-yellow-border); }
+    .preset-badge.red { background: var(--flag-red-bg); color: var(--flag-red); border: 1px solid var(--flag-red-border); }
+
+    .preset-role {
+      font-size: 12px;
+      color: var(--charcoal-muted);
+      margin-top: 2px;
+    }
+
+    /* Traffic Light Flag Hero Card */
+    .triage-result-card {
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-width: 2px;
+      border-style: solid;
+    }
+
+    .triage-result-card.GREEN {
+      background: var(--flag-green-bg);
+      border-color: var(--flag-green-border);
+    }
+
+    .triage-result-card.YELLOW {
+      background: var(--flag-yellow-bg);
+      border-color: var(--flag-yellow-border);
+    }
+
+    .triage-result-card.RED {
+      background: var(--flag-red-bg);
+      border-color: var(--flag-red-border);
+    }
+
+    .triage-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .traffic-light-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #FFFFFF;
+      padding: 8px 18px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .traffic-bulb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .bulb-green { background: #107C41; box-shadow: 0 0 10px #107C41; }
+    .bulb-yellow { background: #E3A008; box-shadow: 0 0 10px #E3A008; }
+    .bulb-red { background: #E02424; box-shadow: 0 0 10px #E02424; }
+
+    .traffic-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-risk-tag {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .action-callout-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-top: 14px;
+      border-left: 5px solid;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .GREEN .action-callout-box { border-left-color: var(--flag-green); }
+    .YELLOW .action-callout-box { border-left-color: var(--flag-yellow); }
+    .RED .action-callout-box { border-left-color: var(--flag-red); }
+
+    .action-icon {
+      font-size: 24px;
+    }
+
+    .action-text-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--charcoal-muted);
+      margin-bottom: 2px;
+    }
+
+    .action-statement {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    /* Criteria Checklist Grid */
+    .criteria-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .criteria-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .crit-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .crit-target {
+      font-size: 10px;
+      color: var(--charcoal-muted);
+    }
+
+    .crit-badge {
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .crit-badge.pass { background: var(--flag-green-bg); color: var(--flag-green); border: 1px solid var(--flag-green-border); }
+    .crit-badge.warn { background: var(--flag-yellow-bg); color: var(--flag-yellow); border: 1px solid var(--flag-yellow-border); }
+    .crit-badge.fail { background: var(--flag-red-bg); color: var(--flag-red); border: 1px solid var(--flag-red-border); }
+
+    /* Advisory Checklist for RED */
+    .advisory-container {
+      background: #FFFFFF;
+      border: 1px solid var(--flag-red-border);
+      border-radius: var(--radius-md);
+      padding: 22px 26px;
+      margin-top: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .advisory-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .advisory-head-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--flag-red);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .advisory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .advisory-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--surface-elevated);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+    }
+
+    .advisory-num {
+      background: var(--flag-red);
+      color: #FFFFFF;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .advisory-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 2px;
+    }
+
+    .advisory-item-desc {
+      font-size: 12px;
+      color: var(--charcoal-muted);
+      line-height: 1.4;
+    }
+
+    /* Telemetry Metrics Grid */
+    .metrics-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--charcoal-muted);
+      margin-bottom: 6px;
+    }
+
+    .metric-val {
+      font-size: 20px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--evergreen);
+    }
+
+    .metric-sub {
+      font-size: 10px;
+      color: var(--charcoal-muted);
+      margin-top: 4px;
+    }
+
+    /* Tabs & Tables */
+    .data-tabs-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .tabs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tab-pills {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      background: var(--surface-elevated);
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal-muted);
+      padding: 8px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--evergreen);
+      color: #FFFFFF;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    table.data-table th {
+      background: var(--surface-elevated);
+      color: var(--charcoal-muted);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(44, 42, 40, 0.06);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    table.data-table tr:hover td {
+      background: rgba(243, 239, 230, 0.5);
+    }
+
+    .tag-surplus {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--flag-green-bg);
+      color: var(--flag-green);
+      border: 1px solid var(--flag-green-border);
+    }
+
+    .tag-deficit {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--flag-red-bg);
+      color: var(--flag-red);
+      border: 1px solid var(--flag-red-border);
+    }
+
+    .tag-bounce {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--charcoal-muted);
+      margin-top: 40px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="brand-group">
+      <span class="brand-badge">BCM</span>
+      <div>
+        <div class="brand-title">Financial Health Triage</div>
+        <div class="brand-sub">Bank Statement Cashflow Intelligence Engine</div>
+      </div>
+    </div>
+    <div class="nav-status-pill">
+      <span class="status-dot"></span>
+      <span>Deterministic Underwriting Engine Active</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Hero Header -->
+    <div class="hero-banner">
+      <span class="hero-tag">BCM / Underwriting Policy Module</span>
+      <h1 class="hero-title">Bank Statement Financial Health Triage</h1>
+      <p class="hero-desc">
+        Deterministic cashflow triage ingesting audited banking ledgers. Computes weekly and monthly time-series aggregations, evaluates DSCR coverage, weekly volatility, bounce frequencies, and assigns automated traffic-light sanctions.
+      </p>
+    </div>
+
+    <!-- Preset Profile Selector -->
+    <div class="preset-selector-card">
+      <div class="preset-header">
+        <span class="preset-heading">Select Ingestion Statement Profile</span>
+        <span style="font-size: 11px; color: var(--charcoal-muted);">12 Weeks Audited Ledger Telemetry</span>
+      </div>
+      <div class="preset-buttons">
+        <!-- Preset 1: Green -->
+        <button id="btn-preset-green" class="preset-btn active green" onclick="loadPreset('green')">
+          <span class="preset-flag-icon">🟢</span>
+          <div class="preset-info">
+            <div class="preset-name">
+              <span>Prime Kirana Merchant</span>
+              <span class="preset-badge green">GREEN</span>
+            </div>
+            <div class="preset-role">Safe to Lend • High DSCR (2.27x) • 0 Bounces</div>
+          </div>
+        </button>
+
+        <!-- Preset 2: Yellow -->
+        <button id="btn-preset-yellow" class="preset-btn yellow" onclick="loadPreset('yellow')">
+          <span class="preset-flag-icon">🟡</span>
+          <div class="preset-info">
+            <div class="preset-name">
+              <span>Mobility Gig Partner</span>
+              <span class="preset-badge yellow">YELLOW</span>
+            </div>
+            <div class="preset-role">Moderate Risk • DSCR 1.28x • 1 Delay in 90d</div>
+          </div>
+        </button>
+
+        <!-- Preset 3: Red -->
+        <button id="btn-preset-red" class="preset-btn red" onclick="loadPreset('red')">
+          <span class="preset-flag-icon">🔴</span>
+          <div class="preset-info">
+            <div class="preset-name">
+              <span>Distressed Seasonal Trader</span>
+              <span class="preset-badge red">RED</span>
+            </div>
+            <div class="preset-role">Cash Deficit • Outflows > Inflows • 2 Bounces</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Traffic-Light Underwriting Flag Display -->
+    <div id="triage-card" class="triage-result-card GREEN">
+      <div class="triage-header-row">
+        <div class="traffic-light-pill">
+          <span id="traffic-bulb" class="traffic-bulb bulb-green"></span>
+          <span id="traffic-title" class="traffic-title">🟢 GREEN (Safe to Lend / Prime)</span>
+        </div>
+        <span id="profile-risk-tag" class="profile-risk-tag">Prime Low-Risk Entity</span>
+      </div>
+
+      <!-- Action Callout Box -->
+      <div class="action-callout-box">
+        <div class="action-icon" id="action-icon">🚀</div>
+        <div>
+          <div class="action-text-label">Automated Deterministic Action</div>
+          <div class="action-statement" id="action-statement">
+            Pre-approved for instant working capital facility; auto-disbursement eligible.
+          </div>
+        </div>
+      </div>
+
+      <!-- Criteria Checklist -->
+      <div class="criteria-cards-grid" id="criteria-checklist">
+        <!-- Dynamically injected -->
+      </div>
+
+      <!-- Advisory Checklist (Appears for RED) -->
+      <div id="advisory-container" class="advisory-container hidden">
+        <div class="advisory-head">
+          <span style="font-size: 18px;">📋</span>
+          <span class="advisory-head-title">Structured Advisory Checklist to Repair Liquidity Runway</span>
+        </div>
+        <div class="advisory-list" id="advisory-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Metrics Cards -->
+    <div class="metrics-summary-grid">
+      <div class="metric-card">
+        <div class="metric-label">Debt Service Coverage</div>
+        <div class="metric-val" id="metric-dscr">2.27x</div>
+        <div class="metric-sub" id="metric-dscr-sub">Cashflow Coverage</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Weekly Volatility</div>
+        <div class="metric-val" id="metric-vol">0.086</div>
+        <div class="metric-sub">Coefficient of Variation (CV)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Debit / NACH Bounces</div>
+        <div class="metric-val" id="metric-bounces">0</div>
+        <div class="metric-sub" id="metric-bounces-sub">0 in 90-day window</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Surplus Weeks</div>
+        <div class="metric-val" id="metric-surplus">100.0%</div>
+        <div class="metric-sub" id="metric-surplus-sub">12 / 12 Audited Weeks</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total Inflows</div>
+        <div class="metric-val" id="metric-inflow">₹49,572</div>
+        <div class="metric-sub">12-Week Gross Credits</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net Surplus</div>
+        <div class="metric-val" id="metric-net">+₹27,732</div>
+        <div class="metric-sub">Cumulative Float</div>
+      </div>
+    </div>
+
+    <!-- Time-Series Aggregations Table -->
+    <div class="data-tabs-card">
+      <div class="tabs-header">
+        <div class="tab-pills">
+          <button id="tab-weekly" class="tab-btn active" onclick="switchTab('weekly')">Weekly Aggregation (12 Weeks)</button>
+          <button id="tab-monthly" class="tab-btn" onclick="switchTab('monthly')">Monthly Aggregation (3 Months)</button>
+        </div>
+        <div style="font-size: 11px; color: var(--charcoal-muted); font-family: 'JetBrains Mono', monospace;">
+          Standard Banking ISO Calendar Aggregations
+        </div>
+      </div>
+
+      <!-- Weekly Table -->
+      <div id="view-weekly" class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Period</th>
+              <th>Inflows</th>
+              <th>Outflows</th>
+              <th>Debt Service</th>
+              <th>Net Surplus</th>
+              <th>Status</th>
+              <th>Bounces</th>
+            </tr>
+          </thead>
+          <tbody id="weekly-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Monthly Table -->
+      <div id="view-monthly" class="table-wrap hidden">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Inflows</th>
+              <th>Outflows</th>
+              <th>Debt Service</th>
+              <th>Net Surplus</th>
+              <th>Status</th>
+              <th>Bounces</th>
+            </tr>
+          </thead>
+          <tbody id="monthly-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      BCM &bull; Because Credit Matters &bull; Bank Statement Financial Health Triage Prototype
+    </div>
+
+  </div>
+
+  <script>
+    // Embedded Triage Data Presets
+    const DATASETS = {
+      green: {
+        flag: "GREEN",
+        title: "🟢 GREEN (Safe to Lend / Prime)",
+        risk: "Prime Low-Risk Entity",
+        bulbClass: "bulb-green",
+        action: "Pre-approved for instant working capital facility; auto-disbursement eligible.",
+        actionIcon: "🚀",
+        metrics: {
+          dscr: "2.27x",
+          vol: "0.086",
+          bounces: 0,
+          bouncesSub: "0 in 90-day window",
+          surplus: "100.0%",
+          surplusSub: "12 / 12 Audited Weeks",
+          inflow: "₹49,572.50",
+          outflow: "₹21,840.00",
+          net: "+₹27,732.50"
+        },
+        criteria: [
+          { title: "DSCR Coverage", target: "Target ≥ 1.5x", val: "2.27x", pass: true, class: "pass" },
+          { title: "Weekly Cashflow Volatility", target: "Target ≤ 0.35", val: "0.086", pass: true, class: "pass" },
+          { title: "Debit / NACH Bounces", target: "Target: 0 Bounces", val: "0 Bounces", pass: true, class: "pass" },
+          { title: "Positive Surplus Weeks", target: "Target ≥ 85%", val: "100.0%", pass: true, class: "pass" }
+        ],
+        advisory: null,
+        weekly: [
+          { week: "2026-W23", period: "Jun 02 - Jun 07", inflow: 3950.0, outflow: 1820.0, debt: 600.0, net: 2130.0, surplus: true, bounces: 0 },
+          { week: "2026-W24", period: "Jun 09 - Jun 14", inflow: 4542.5, outflow: 1820.0, debt: 600.0, net: 2722.5, surplus: true, bounces: 0 },
+          { week: "2026-W25", period: "Jun 16 - Jun 21", inflow: 3752.5, outflow: 1820.0, debt: 600.0, net: 1932.5, surplus: true, bounces: 0 },
+          { week: "2026-W26", period: "Jun 23 - Jun 28", inflow: 4345.0, outflow: 1820.0, debt: 600.0, net: 2525.0, surplus: true, bounces: 0 },
+          { week: "2026-W27", period: "Jun 30 - Jul 05", inflow: 4147.5, outflow: 1820.0, debt: 600.0, net: 2327.5, surplus: true, bounces: 0 },
+          { week: "2026-W28", period: "Jul 07 - Jul 12", inflow: 3555.0, outflow: 1820.0, debt: 600.0, net: 1735.0, surplus: true, bounces: 0 },
+          { week: "2026-W29", period: "Jul 14 - Jul 19", inflow: 4740.0, outflow: 1820.0, debt: 600.0, net: 2920.0, surplus: true, bounces: 0 },
+          { week: "2026-W30", period: "Jul 21 - Jul 26", inflow: 3950.0, outflow: 1820.0, debt: 600.0, net: 2130.0, surplus: true, bounces: 0 },
+          { week: "2026-W31", period: "Jul 28 - Aug 02", inflow: 4345.0, outflow: 1820.0, debt: 600.0, net: 2525.0, surplus: true, bounces: 0 },
+          { week: "2026-W32", period: "Aug 04 - Aug 09", inflow: 3752.5, outflow: 1820.0, debt: 600.0, net: 1932.5, surplus: true, bounces: 0 },
+          { week: "2026-W33", period: "Aug 11 - Aug 16", inflow: 4542.5, outflow: 1820.0, debt: 600.0, net: 2722.5, surplus: true, bounces: 0 },
+          { week: "2026-W34", period: "Aug 18 - Aug 23", inflow: 3950.0, outflow: 1820.0, debt: 600.0, net: 2130.0, surplus: true, bounces: 0 }
+        ],
+        monthly: [
+          { month: "2026-06", inflow: 16590.0, outflow: 7280.0, debt: 2400.0, net: 9310.0, surplus: true, bounces: 0 },
+          { month: "2026-07", inflow: 17380.0, outflow: 7280.0, debt: 2400.0, net: 10100.0, surplus: true, bounces: 0 },
+          { month: "2026-08", inflow: 15602.5, outflow: 7280.0, debt: 2400.0, net: 8322.5, surplus: true, bounces: 0 }
+        ]
+      },
+      yellow: {
+        flag: "YELLOW",
+        title: "🟡 YELLOW (Moderate Risk / Caution)",
+        risk: "Moderate Risk / Cautionary Clearance",
+        bulbClass: "bulb-yellow",
+        action: "Conditional sanction with tranche-based drawdowns and daily auto-debit collection.",
+        actionIcon: "⚠️",
+        metrics: {
+          dscr: "1.28x",
+          vol: "0.432",
+          bounces: 0,
+          bouncesSub: "1 late delay in 90d",
+          surplus: "66.7%",
+          surplusSub: "8 / 12 Audited Weeks",
+          inflow: "₹18,200.00",
+          outflow: "₹14,235.00",
+          net: "+₹3,965.00"
+        },
+        criteria: [
+          { title: "DSCR Coverage", target: "1.0x ≤ DSCR < 1.5x", val: "1.28x", pass: true, class: "warn" },
+          { title: "Weekly Cashflow Volatility", target: "0.35 to 0.65", val: "0.432", pass: true, class: "warn" },
+          { title: "Delays/Bounces in 90 Days", target: "≤ 1 delay in 90d", val: "1 delay", pass: true, class: "warn" },
+          { title: "Positive Surplus Weeks", target: "Controlled Deficits", val: "66.7%", pass: true, class: "warn" }
+        ],
+        advisory: null,
+        weekly: [
+          { week: "2026-W23", period: "Jun 02 - Jun 06", inflow: 1100.0, outflow: 1050.0, debt: 472.5, net: 50.0, surplus: true, bounces: 0 },
+          { week: "2026-W24", period: "Jun 09 - Jun 13", inflow: 2400.0, outflow: 1500.0, debt: 675.0, net: 900.0, surplus: true, bounces: 0 },
+          { week: "2026-W25", period: "Jun 16 - Jun 20", inflow: 900.0, outflow: 950.0, debt: 427.5, net: -50.0, surplus: false, bounces: 0 },
+          { week: "2026-W26", period: "Jun 23 - Jun 27", inflow: 1800.0, outflow: 1300.0, debt: 585.0, net: 500.0, surplus: true, bounces: 0 },
+          { week: "2026-W27", period: "Jun 30 - Jul 04", inflow: 2600.0, outflow: 1700.0, debt: 765.0, net: 900.0, surplus: true, bounces: 0 },
+          { week: "2026-W28", period: "Jul 07 - Jul 11", inflow: 800.0, outflow: 850.0, debt: 382.5, net: -50.0, surplus: false, bounces: 0 },
+          { week: "2026-W29", period: "Jul 14 - Jul 18", inflow: 1400.0, outflow: 1100.0, debt: 495.0, net: 300.0, surplus: true, bounces: 0 },
+          { week: "2026-W30", period: "Jul 21 - Jul 25", inflow: 2200.0, outflow: 1450.0, debt: 652.5, net: 750.0, surplus: true, bounces: 0 },
+          { week: "2026-W31", period: "Jul 28 - Aug 01", inflow: 750.0, outflow: 885.0, debt: 382.5, net: -135.0, surplus: false, bounces: 0 },
+          { week: "2026-W32", period: "Aug 04 - Aug 08", inflow: 1600.0, outflow: 1200.0, debt: 540.0, net: 400.0, surplus: true, bounces: 0 },
+          { week: "2026-W33", period: "Aug 11 - Aug 15", inflow: 2000.0, outflow: 1450.0, debt: 652.5, net: 550.0, surplus: true, bounces: 0 },
+          { week: "2026-W34", period: "Aug 18 - Aug 22", inflow: 650.0, outflow: 800.0, debt: 360.0, net: -150.0, surplus: false, bounces: 0 }
+        ],
+        monthly: [
+          { month: "2026-06", inflow: 6200.0, outflow: 4800.0, debt: 2160.0, net: 1400.0, surplus: true, bounces: 0 },
+          { month: "2026-07", inflow: 7000.0, outflow: 5100.0, debt: 2295.0, net: 1900.0, surplus: true, bounces: 0 },
+          { month: "2026-08", inflow: 5000.0, outflow: 4335.0, debt: 1935.0, net: 665.0, surplus: true, bounces: 0 }
+        ]
+      },
+      red: {
+        flag: "RED",
+        title: "🔴 RED (High Risk / Cash Deficit)",
+        risk: "High Risk / Cash Deficit Entity",
+        bulbClass: "bulb-red",
+        action: "Decline application; output structured advisory checklist to repair liquidity runway.",
+        actionIcon: "🛑",
+        metrics: {
+          dscr: "0.70x",
+          vol: "1.323",
+          bounces: 2,
+          bouncesSub: "2 NACH returns in 90d",
+          surplus: "33.3%",
+          surplusSub: "4 / 12 Audited Weeks",
+          inflow: "₹11,000.00",
+          outflow: "₹15,800.00",
+          net: "-₹4,800.00"
+        },
+        criteria: [
+          { title: "DSCR Coverage", target: "Trigger: DSCR < 1.0x (Outflows > Inflows)", val: "0.70x", pass: false, class: "fail" },
+          { title: "Weekly Cashflow Volatility", target: "Trigger: Volatility > 0.65", val: "1.323", pass: false, class: "fail" },
+          { title: "Debit / NACH Bounces", target: "Trigger: ≥ 2 Bounces", val: "2 Bounces", pass: false, class: "fail" },
+          { title: "Persistent Deficit", target: "Trigger: Surplus < 50%", val: "33.3%", pass: false, class: "fail" }
+        ],
+        advisory: [
+          { step: 1, title: "Immediate Cash Runway Cushion", desc: "Maintain a minimum operating liquidity floor of at least 14 days of average weekly outflows before seeking incremental credit facilities." },
+          { step: 2, title: "Consolidate High-Cost Fixed Obligations", desc: "Restructure or consolidate short-term micro-loans to lower immediate weekly debt servicing requirements below 30% of gross inflows." },
+          { step: 3, title: "Eliminate NACH & Debit Dishonour Penalties", desc: "Realign automated debit schedules (EMIs, supplier mandates) directly with verified inflow deposit dates to stop bounce charges." },
+          { step: 4, title: "Smoothen Weekly Inflow Volatility", desc: "Diversify customer revenue channels or invoice milestone timing to bring weekly cashflow coefficient of variation below 0.35." },
+          { step: 5, title: "60–90 Day Rehabilitation Re-audit", desc: "Demonstrate at least 6 consecutive weeks of positive net operating surplus before re-submitting for automated underwriting clearance." }
+        ],
+        weekly: [
+          { week: "2026-W23", period: "Jun 02 - Jun 06", inflow: 2500.0, outflow: 1400.0, debt: 0.0, net: 1100.0, surplus: true, bounces: 0 },
+          { week: "2026-W24", period: "Jun 09 - Jun 13", inflow: 0.0, outflow: 1600.0, debt: 0.0, net: -1600.0, surplus: false, bounces: 0 },
+          { week: "2026-W25", period: "Jun 16 - Jun 20", inflow: 400.0, outflow: 1350.0, debt: 150.0, net: -950.0, surplus: false, bounces: 1 },
+          { week: "2026-W26", period: "Jun 23 - Jun 27", inflow: 3100.0, outflow: 1300.0, debt: 0.0, net: 1800.0, surplus: true, bounces: 0 },
+          { week: "2026-W27", period: "Jun 30 - Jul 04", inflow: 0.0, outflow: 1500.0, debt: 0.0, net: -1500.0, surplus: false, bounces: 0 },
+          { week: "2026-W28", period: "Jul 07 - Jul 11", inflow: 0.0, outflow: 1100.0, debt: 0.0, net: -1100.0, surplus: false, bounces: 0 },
+          { week: "2026-W29", period: "Jul 14 - Jul 18", inflow: 1800.0, outflow: 1250.0, debt: 0.0, net: 550.0, surplus: true, bounces: 0 },
+          { week: "2026-W30", period: "Jul 21 - Jul 25", inflow: 200.0, outflow: 1550.0, debt: 150.0, net: -1350.0, surplus: false, bounces: 1 },
+          { week: "2026-W31", period: "Jul 28 - Aug 01", inflow: 0.0, outflow: 1150.0, debt: 0.0, net: -1150.0, surplus: false, bounces: 0 },
+          { week: "2026-W32", period: "Aug 04 - Aug 08", inflow: 2900.0, outflow: 1300.0, debt: 0.0, net: 1600.0, surplus: true, bounces: 0 },
+          { week: "2026-W33", period: "Aug 11 - Aug 15", inflow: 100.0, outflow: 1200.0, debt: 0.0, net: -1100.0, surplus: false, bounces: 0 },
+          { week: "2026-W34", period: "Aug 18 - Aug 22", inflow: 0.0, outflow: 1100.0, debt: 0.0, net: -1100.0, surplus: false, bounces: 0 }
+        ],
+        monthly: [
+          { month: "2026-06", inflow: 6000.0, outflow: 5650.0, debt: 150.0, net: 350.0, surplus: true, bounces: 1 },
+          { month: "2026-07", inflow: 2000.0, outflow: 5000.0, debt: 150.0, net: -3000.0, surplus: false, bounces: 1 },
+          { month: "2026-08", inflow: 3000.0, outflow: 5150.0, debt: 0.0, net: -2150.0, surplus: false, bounces: 0 }
+        ]
+      }
+    };
+
+    function loadPreset(key) {
+      const data = DATASETS[key];
+      if (!data) return;
+
+      // Update button active states
+      document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-preset-${key}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Update Card Container Class
+      const card = document.getElementById('triage-card');
+      card.className = `triage-result-card ${data.flag}`;
+
+      // Update Bulb & Title
+      const bulb = document.getElementById('traffic-bulb');
+      bulb.className = `traffic-bulb ${data.bulbClass}`;
+      document.getElementById('traffic-title').textContent = data.title;
+      document.getElementById('profile-risk-tag').textContent = data.risk;
+
+      // Update Action
+      document.getElementById('action-statement').textContent = data.action;
+      document.getElementById('action-icon').textContent = data.actionIcon;
+
+      // Update Metrics
+      document.getElementById('metric-dscr').textContent = data.metrics.dscr;
+      document.getElementById('metric-vol').textContent = data.metrics.vol;
+      document.getElementById('metric-bounces').textContent = data.metrics.bounces;
+      document.getElementById('metric-bounces-sub').textContent = data.metrics.bouncesSub;
+      document.getElementById('metric-surplus').textContent = data.metrics.surplus;
+      document.getElementById('metric-surplus-sub').textContent = data.metrics.surplusSub;
+      document.getElementById('metric-inflow').textContent = data.metrics.inflow;
+      document.getElementById('metric-net').textContent = data.metrics.net;
+
+      // Update Criteria Checklist
+      const criteriaList = document.getElementById('criteria-checklist');
+      criteriaList.innerHTML = data.criteria.map(c => `
+        <div class="criteria-card">
+          <div>
+            <div class="crit-title">${c.title}</div>
+            <div class="crit-target">${c.target}</div>
+          </div>
+          <span class="crit-badge ${c.class}">${c.val}</span>
+        </div>
+      `).join('');
+
+      // Update Advisory (RED only)
+      const advisoryContainer = document.getElementById('advisory-container');
+      const advisoryList = document.getElementById('advisory-list');
+      if (data.advisory && data.advisory.length > 0) {
+        advisoryContainer.classList.remove('hidden');
+        advisoryList.innerHTML = data.advisory.map(a => `
+          <div class="advisory-item">
+            <div class="advisory-num">${a.step}</div>
+            <div>
+              <div class="advisory-item-title">${a.title}</div>
+              <div class="advisory-item-desc">${a.desc}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        advisoryContainer.classList.add('hidden');
+      }
+
+      // Render Tables
+      renderWeeklyTable(data.weekly);
+      renderMonthlyTable(data.monthly);
+    }
+
+    function renderWeeklyTable(rows) {
+      const tbody = document.getElementById('weekly-table-body');
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td><strong>${r.week}</strong></td>
+          <td style="color: var(--charcoal-muted);">${r.period}</td>
+          <td style="color: var(--flag-green); font-weight: 600;">+₹${r.inflow.toFixed(2)}</td>
+          <td style="color: var(--charcoal-muted);">-₹${r.outflow.toFixed(2)}</td>
+          <td>₹${r.debt.toFixed(2)}</td>
+          <td style="font-weight: 700; color: ${r.net >= 0 ? 'var(--flag-green)' : 'var(--flag-red)'};">
+            ${r.net >= 0 ? '+' : ''}₹${r.net.toFixed(2)}
+          </td>
+          <td>
+            <span class="${r.surplus ? 'tag-surplus' : 'tag-deficit'}">
+              ${r.surplus ? '✓ SURPLUS' : '⚠️ DEFICIT'}
+            </span>
+          </td>
+          <td>
+            ${r.bounces > 0 ? `<span class="tag-bounce">${r.bounces} BOUNCE</span>` : '<span style="color: #9CA3AF;">0</span>'}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderMonthlyTable(rows) {
+      const tbody = document.getElementById('monthly-table-body');
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td><strong>${r.month}</strong></td>
+          <td style="color: var(--flag-green); font-weight: 600;">+₹${r.inflow.toFixed(2)}</td>
+          <td style="color: var(--charcoal-muted);">-₹${r.outflow.toFixed(2)}</td>
+          <td>₹${r.debt.toFixed(2)}</td>
+          <td style="font-weight: 700; color: ${r.net >= 0 ? 'var(--flag-green)' : 'var(--flag-red)'};">
+            ${r.net >= 0 ? '+' : ''}₹${r.net.toFixed(2)}
+          </td>
+          <td>
+            <span class="${r.surplus ? 'tag-surplus' : 'tag-deficit'}">
+              ${r.surplus ? '✓ SURPLUS' : '⚠️ DEFICIT'}
+            </span>
+          </td>
+          <td>
+            ${r.bounces > 0 ? `<span class="tag-bounce">${r.bounces} BOUNCE</span>` : '<span style="color: #9CA3AF;">0</span>'}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function switchTab(tab) {
+      document.getElementById('tab-weekly').classList.toggle('active', tab === 'weekly');
+      document.getElementById('tab-monthly').classList.toggle('active', tab === 'monthly');
+      document.getElementById('view-weekly').classList.toggle('hidden', tab !== 'weekly');
+      document.getElementById('view-monthly').classList.toggle('hidden', tab !== 'monthly');
+    }
+
+    // Initial Load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPreset('green');
+    });
+  </script>
+</body>
+</html>

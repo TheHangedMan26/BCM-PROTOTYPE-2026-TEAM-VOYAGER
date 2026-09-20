@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCM — Alternative Credit Intelligence</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Canvas Background -->
+  <canvas id="ambient-canvas" class="ambient-canvas"></canvas>
+
+  <!-- Subtle Ambient Atmospheric Glow Spots -->
+  <div class="ambient-glow glow-top-left" aria-hidden="true"></div>
+  <div class="ambient-glow glow-center-right" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom-left" aria-hidden="true"></div>
+
+  <!-- Floating Orbital Objects Background Stage -->
+  <div id="orbital-stage" class="orbital-stage" aria-hidden="true">
+    <!-- Object 1: Small Financial Document / Credit Report Card (Top Left) -->
+    <div class="orbital-item orbit-doc foreground" style="--orbit-duration: 26s; --orbit-delay: -2s;">
+      <div class="physical-object doc-card">
+        <div class="doc-header">
+          <span class="doc-badge">BCM / REP</span>
+          <span class="doc-id">#9402</span>
+        </div>
+        <div class="doc-line short"></div>
+        <div class="doc-line long"></div>
+        <div class="doc-footer">
+          <span class="doc-status-dot"></span>
+          <span>AA Verified</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Object 2: Abstract Transaction Receipt Slip (Top Center/Right) -->
+    <div class="orbital-item orbit-receipt midground" style="--orbit-duration: 32s; --orbit-delay: -9s;">
+      <div class="physical-object receipt-slip">
+        <div class="receipt-notch"></div>
+        <div class="receipt-row"><span>INFLOW</span><strong>+₹420.00</strong></div>
+        <div class="receipt-row muted"><span>UBER DRIVER</span><span>AUG 01</span></div>
+        <div class="receipt-zigzag"></div>
+      </div>
+    </div>
+
+    <!-- Object 3: Tiny Bank / Ledger Card (Top Right) -->
+    <div class="orbital-item orbit-ledger foreground" style="--orbit-duration: 28s; --orbit-delay: -14s;">
+      <div class="physical-object ledger-card">
+        <div class="mini-chip"></div>
+        <div class="ledger-brand">BCM PRIME</div>
+        <div class="ledger-balance">₹6,500</div>
+      </div>
+    </div>
+
+    <!-- Object 4: Telemetry Radar Node (Right Perimeter) -->
+    <div class="orbital-item orbit-node midground" style="--orbit-duration: 24s; --orbit-delay: -5s;">
+      <div class="physical-object telemetry-node-disc">
+        <div class="radar-ring"></div>
+        <div class="radar-center-dot"></div>
+        <span class="node-val">14ms</span>
+      </div>
+    </div>
+
+    <!-- Object 5: Mini Score Pill (Right Lower Perimeter) -->
+    <div class="orbital-item orbit-score foreground" style="--orbit-duration: 30s; --orbit-delay: -19s;">
+      <div class="physical-object score-pill-mini">
+        <span class="mini-score-num">785</span>
+        <span class="mini-tier-tag">Tier A</span>
+      </div>
+    </div>
+
+    <!-- Object 6: Abstract Line-Chart Card (Bottom Right) -->
+    <div class="orbital-item orbit-chart midground" style="--orbit-duration: 34s; --orbit-delay: -11s;">
+      <div class="physical-object mini-chart-card">
+        <div class="mini-chart-head">VELOCITY</div>
+        <svg class="mini-wave-svg" viewBox="0 0 60 22">
+          <path d="M0,18 Q15,16 30,8 T60,4" fill="none" stroke="#5FB88A" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Object 7: Calculator / Metric Shape (Bottom Center) -->
+    <div class="orbital-item orbit-calc background" style="--orbit-duration: 22s; --orbit-delay: -7s;">
+      <div class="physical-object calc-card">
+        <span class="calc-label">ΔAPR</span>
+        <span class="calc-val">-3.3%</span>
+      </div>
+    </div>
+
+    <!-- Object 8: Geometric Sage Pill (Bottom Left) -->
+    <div class="orbital-item orbit-geom foreground" style="--orbit-duration: 29s; --orbit-delay: -16s;">
+      <div class="physical-object geom-pill">
+        <span class="geom-check">✓</span>
+        <span>PDI 96.0</span>
+      </div>
+    </div>
+
+    <!-- Object 9: Tiny Micro Data Chip (Left Edge) -->
+    <div class="orbital-item orbit-chip midground" style="--orbit-duration: 25s; --orbit-delay: -4s;">
+      <div class="physical-object chip-card">
+        <div class="chip-grid"></div>
+        <span class="chip-text">AA-256</span>
+      </div>
+    </div>
+
+    <!-- Object 10: Subtle Paper Rectangle / Compliance Note (Top Left Midground) -->
+    <div class="orbital-item orbit-paper background" style="--orbit-duration: 36s; --orbit-delay: -21s;">
+      <div class="physical-object paper-slip">
+        <div class="paper-title">DPDP / FCRA</div>
+        <div class="paper-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Fintech Two-Column Login Experience -->
+  <div id="login-overlay" class="login-overlay">
+    <!-- Floating Atmospheric Orbs -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="fintech-login-container">
+      
+      <!-- LEFT SECTION: Login Form & Brand -->
+      <div class="fintech-login-left">
+        <!-- Brand Header -->
+        <div class="fintech-brand-row">
+          <div class="fintech-brand-badge">
+            <span class="brand-badge">BCM</span>
+          </div>
+          <div class="fintech-brand-meta">
+            <span class="fintech-brand-title">BCM</span>
+            <span class="fintech-brand-tag">Because Credit Matters</span>
+          </div>
+        </div>
+
+        <!-- View 1: Sign In -->
+        <div id="view-signin" class="login-view-block">
+          <div class="form-heading-group">
+            <h1 class="form-main-heading">Welcome Back</h1>
+            <p class="form-sub-heading">Sign in to your account to continue.</p>
+          </div>
+
+          <!-- Alert / Error Banner -->
+          <div id="login-alert-banner" class="login-alert-banner hidden" role="alert">
+            <span class="alert-icon">⚠️</span>
+            <span id="login-alert-text">Please enter valid credentials.</span>
+          </div>
+
+          <form id="form-signin" class="fintech-form" novalidate>
+            <!-- Email Address Field -->
+            <div class="form-field-group">
+              <label for="signin-email" class="form-label">Email Address</label>
+              <div class="form-input-shell">
+                <span class="input-inline-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <input 
+                  type="email" 
+                  id="signin-email" 
+                  class="fintech-input" 
+                  placeholder="Enter your email address" 
+                  autocomplete="email" 
+                  required
+                >
+              </div>
+              <span id="signin-email-error" class="form-error-hint hidden">Please enter a valid email address.</span>
+            </div>
+
+            <!-- Password Field with Show/Hide Toggle -->
+            <div class="form-field-group">
+              <div class="label-with-action">
+                <label for="signin-password" class="form-label">Password</label>
+              </div>
+              <div class="form-input-shell">
+                <span class="input-inline-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </span>
+                <input 
+                  type="password" 
+                  id="signin-password" 
+                  class="fintech-input input-with-toggle" 
+                  placeholder="Enter your password" 
+                  autocomplete="current-password" 
+                  required
+                >
+                <button type="button" id="btn-toggle-password" class="pwd-visibility-toggle" aria-label="Toggle password visibility" tabindex="-1">
+                  <!-- Eye Icon (shown when masked) -->
+                  <svg class="eye-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  <!-- Eye Off Icon (hidden initially) -->
+                  <svg class="eye-hide hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                </button>
+              </div>
+              <span id="signin-password-error" class="form-error-hint hidden">Password must be at least 6 characters.</span>
+            </div>
+
+            <!-- Remember Me & Forgot Password Row -->
+            <div class="form-options-row">
+              <label class="checkbox-label" for="signin-remember">
+                <input type="checkbox" id="signin-remember">
+                <span class="checkbox-text">Remember me</span>
+              </label>
+              <button type="button" id="link-goto-forgot" class="link-forgot-pwd">Forgot password?</button>
+            </div>
+
+            <!-- Feature 1: Persona-Adaptive Borrower Selection Segment -->
+            <div class="form-field-group onboarding-persona-section">
+              <div class="onboarding-persona-head">
+                <label class="form-label">Select Your Borrower Segment</label>
+                <span class="sub-label-note">Adaptive Telemetry</span>
+              </div>
+              
+              <div class="onboarding-persona-grid" id="onboarding-persona-grid">
+                <button type="button" class="onboarding-persona-card active" data-persona="gig_worker">
+                  <div class="onboarding-persona-icon">🛵</div>
+                  <div class="onboarding-persona-info">
+                    <strong>Gig Worker</strong>
+                    <span>Mobility / Delivery</span>
+                  </div>
+                </button>
+                
+                <button type="button" class="onboarding-persona-card" data-persona="kirana_merchant">
+                  <div class="onboarding-persona-icon">🏪</div>
+                  <div class="onboarding-persona-info">
+                    <strong>Micro-Vendor</strong>
+                    <span>Kirana / Retail</span>
+                  </div>
+                </button>
+
+                <button type="button" class="onboarding-persona-card" data-persona="thin_file_fresher">
+                  <div class="onboarding-persona-icon">🎓</div>
+                  <div class="onboarding-persona-info">
+                    <strong>Student / Gen-Z</strong>
+                    <span>New-to-Credit</span>
+                  </div>
+                </button>
+
+                <button type="button" class="onboarding-persona-card" data-persona="seasonal_trader">
+                  <div class="onboarding-persona-icon">🌾</div>
+                  <div class="onboarding-persona-info">
+                    <strong>Agri / Artisan</strong>
+                    <span>Seasonal Produce</span>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Dynamic Adaptive Fields Container -->
+              <div class="adaptive-fields-box" id="adaptive-fields-box">
+                <!-- 1. For Vendor / Gig -->
+                <div class="adaptive-group" id="adaptive-group-vendor-gig">
+                  <div class="adaptive-field-row">
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Business / Platform Name</label>
+                      <input type="text" id="onboard-business-name" class="fintech-input-xs" placeholder="e.g. Swiggy Partner" value="Swiggy Mobility Partner">
+                    </div>
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Daily UPI Turnover (₹)</label>
+                      <input type="number" id="onboard-daily-turnover" class="fintech-input-xs" placeholder="e.g. 2200" value="2200">
+                    </div>
+                  </div>
+                  <div class="adaptive-input-wrap" style="margin-top: 8px;">
+                    <label class="form-label-xs">Primary QR / Inflow Provider</label>
+                    <select id="onboard-qr-provider" class="fintech-input-xs">
+                      <option value="PhonePe">PhonePe QR & UPI</option>
+                      <option value="GooglePay">Google Pay Business</option>
+                      <option value="Paytm">Paytm Soundbox / QR</option>
+                      <option value="BharatPe">BharatPe Merchant QR</option>
+                      <option value="BHIM">BHIM / Direct Bank VPA</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- 2. For Student / Gen-Z -->
+                <div class="adaptive-group hidden" id="adaptive-group-student">
+                  <div class="adaptive-field-row">
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Educational Institution & Year</label>
+                      <input type="text" id="onboard-student-college" class="fintech-input-xs" placeholder="e.g. Delhi University - 3rd Year" value="Delhi University (3rd Year)">
+                    </div>
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Monthly Pocket Money / Stipend (₹ UPI)</label>
+                      <input type="number" id="onboard-student-stipend" class="fintech-input-xs" placeholder="e.g. 12000" value="12000">
+                    </div>
+                  </div>
+                  <div class="adaptive-field-row" style="margin-top: 8px;">
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Household Income Band (Proxy)</label>
+                      <select id="onboard-family-income" class="fintech-input-xs">
+                        <option value="MID">₹3 Lakh – ₹8 Lakh / yr</option>
+                        <option value="LOW">&lt; ₹3 Lakh / yr</option>
+                        <option value="HIGH">&gt; ₹8 Lakh / yr</option>
+                      </select>
+                    </div>
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Parental Profession</label>
+                      <input type="text" id="onboard-parental-profession" class="fintech-input-xs" placeholder="e.g. Salaried Govt / Private Sector" value="Salaried Education / PSU">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. For Agri / Seasonal Artisan -->
+                <div class="adaptive-group hidden" id="adaptive-group-agri">
+                  <div class="adaptive-field-row">
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Crop or Artisan Craft Type</label>
+                      <input type="text" id="onboard-agri-crop" class="fintech-input-xs" placeholder="e.g. Wheat & Mustard Harvest" value="Soybean & Wheat Harvest">
+                    </div>
+                    <div class="adaptive-input-wrap">
+                      <label class="form-label-xs">Seasonal Inflow Frequency</label>
+                      <select id="onboard-agri-cycle" class="fintech-input-xs">
+                        <option value="biannual">Biannual Post-Harvest Bulk</option>
+                        <option value="quarterly">Quarterly Mandi Settlements</option>
+                        <option value="monthly">Monthly Cooperative Inflow</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terms & Consent Review Link -->
+            <div class="terms-trigger-row">
+              <button type="button" id="link-open-terms" class="link-terms-button">
+                🛡️ Review Account Aggregator Consent &amp; Terms
+              </button>
+            </div>
+
+            <!-- Primary Sign In Button with Purple Accent -->
+            <button type="submit" id="btn-submit-signin" class="btn-purple-primary">
+              <span class="btn-spinner hidden" id="signin-spinner"></span>
+              <span class="btn-label-text" id="signin-btn-text">Sign In</span>
+              <svg class="btn-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+
+            <!-- Quick Demo Shortcut for Judges & Evaluators -->
+            <div class="demo-quick-box">
+              <span class="demo-box-label">⚡ Demo Accounts (One-Click Auto Fill)</span>
+              <div class="demo-actions-row">
+                <button type="button" id="btn-demo-alex" class="demo-credential-pill" data-persona="alex" title="Fill Risk Analyst Account">
+                  <span class="demo-pill-role">Bank</span>
+                  <span class="demo-pill-name">Alex Turner</span>
+                </button>
+                <button type="button" id="btn-demo-rohan" class="demo-credential-pill active" data-persona="gig_worker" title="Fill Gig Worker Account">
+                  <span class="demo-pill-role">Gig</span>
+                  <span class="demo-pill-name">Rohan M.</span>
+                </button>
+                <button type="button" id="btn-demo-sunita" class="demo-credential-pill" data-persona="kirana_merchant" title="Fill Kirana Merchant Account">
+                  <span class="demo-pill-role">Kirana</span>
+                  <span class="demo-pill-name">Sunita K.</span>
+                </button>
+                <button type="button" id="btn-demo-aarav" class="demo-credential-pill" data-persona="thin_file_fresher" title="Fill Student Account">
+                  <span class="demo-pill-role">Student</span>
+                  <span class="demo-pill-name">Aarav S.</span>
+                </button>
+                <button type="button" id="btn-demo-vikram" class="demo-credential-pill" data-persona="seasonal_trader" title="Fill Agri Trader Account">
+                  <span class="demo-pill-role">Agri</span>
+                  <span class="demo-pill-name">Vikram R.</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Footer Switch to Register -->
+            <div class="form-footer-note">
+              <span>Don't have an account?</span>
+              <button type="button" id="link-goto-register" class="link-switch-auth">Create account</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- View 2: Create Account (Register) -->
+        <div id="view-register" class="login-view-block hidden">
+          <div class="form-heading-group">
+            <h1 class="form-main-heading">Create Account</h1>
+            <p class="form-sub-heading">Start your consent-driven credit assessment with BCM.</p>
+          </div>
+
+          <div id="register-alert-banner" class="login-alert-banner hidden" role="alert">
+            <span class="alert-icon">⚠️</span>
+            <span id="register-alert-text"></span>
+          </div>
+
+          <form id="form-register" class="fintech-form" novalidate>
+            <div class="form-field-group">
+              <label for="reg-name" class="form-label">Full Name</label>
+              <div class="form-input-shell">
+                <span class="input-inline-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </span>
+                <input type="text" id="reg-name" class="fintech-input" placeholder="e.g. Sarah Jenkins" required>
+              </div>
+            </div>
+
+            <div class="form-field-group">
+              <label for="reg-email" class="form-label">Email Address</label>
+              <div class="form-input-shell">
+                <span class="input-inline-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <input type="email" id="reg-email" class="fintech-input" placeholder="name@company.com" required>
+              </div>
+            </div>
+
+            <div class="form-field-group">
+              <label for="reg-password" class="form-label">Create Password</label>
+              <div class="form-input-shell">
+                <span class="input-inline-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </span>
+                <input type="password" id="reg-password" class="fintech-input" placeholder="Minimum 6 characters" required>
+              </div>
+            </div>
+
+            <div class="form-field-group">
+              <label for="reg-role" class="form-label">Account Perspective</label>
+              <select id="reg-role" class="fintech-input">
+                <option value="BORROWER">Borrower (Underwrite my credit)</option>
+                <option value="BANK">Bank / Underwriter (Institutional view)</option>
+              </select>
+            </div>
+
+            <button type="submit" id="btn-submit-register" class="btn-purple-primary">
+              <span class="btn-spinner hidden" id="register-spinner"></span>
+              <span id="register-btn-text">Create Account</span>
+            </button>
+
+            <div class="form-footer-note">
+              <span>Already have an account?</span>
+              <button type="button" id="link-register-to-login" class="link-switch-auth">Sign in</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- View 3: Forgot Password -->
+        <div id="view-forgot" class="login-view-block hidden">
+          <div class="form-heading-group">
+            <h1 class="form-main-heading">Reset Password</h1>
+            <p class="form-sub-heading">Enter your verified email to receive a recovery link.</p>
+          </div>
+
+          <div id="forgot-alert-banner" class="login-alert-banner hidden" role="alert">
+            <span class="alert-icon">ℹ️</span>
+            <span id="forgot-alert-text"></span>
+          </div>
+
+          <form id="form-forgot" class="fintech-form" novalidate>
+            <div class="form-field-group">
+              <label for="forgot-email" class="form-label">Email Address</label>
+              <div class="form-input-shell">
+                <span class="input-inline-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <input type="email" id="forgot-email" class="fintech-input" placeholder="Enter your registered email" required>
+              </div>
+            </div>
+
+            <button type="submit" id="btn-submit-forgot" class="btn-purple-primary">
+              <span class="btn-spinner hidden" id="forgot-spinner"></span>
+              <span id="forgot-btn-text">Send Recovery Link</span>
+            </button>
+
+            <div class="form-footer-note">
+              <span>Remembered your password?</span>
+              <button type="button" id="link-forgot-to-login" class="link-switch-auth">Back to Sign in</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Security Badge in Left Footer -->
+        <div class="left-security-tag">
+          <span class="sec-dot"></span>
+          <span>End-to-end encrypted telemetry • RBI Account Aggregator compliant</span>
+        </div>
+      </div>
+
+      <!-- RIGHT SECTION: Visual Panel Area -->
+      <div class="fintech-login-right">
+        
+        <!-- Header Text in Visual Panel -->
+        <div class="visual-panel-header">
+          <div class="visual-badge-pill">
+            <span class="sparkle-icon">✨</span>
+            <span>Next-Gen Credit Intelligence</span>
+          </div>
+          <h2 class="visual-main-heading">Your Financial Journey Starts Here</h2>
+          <p class="visual-sub-heading">Access your account securely and stay connected with your financial insights.</p>
+        </div>
+
+        <!-- Floating Fintech Showcase Stage -->
+        <div class="fintech-card-stage">
+          
+          <!-- Titanium / Metallic BCM Card Mockup -->
+          <div class="titanium-card">
+            <div class="card-mesh-bg"></div>
+            
+            <div class="card-top-row">
+              <div class="card-chip-graphic">
+                <div class="chip-line horizontal"></div>
+                <div class="chip-line vertical"></div>
+              </div>
+              <div class="card-contactless">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+              </div>
+              <div class="card-brand-logo">BCM</div>
+            </div>
+
+            <div class="card-number-row">
+              <span class="card-dots">••••</span>
+              <span class="card-dots">••••</span>
+              <span class="card-dots">••••</span>
+              <span class="card-digits-last">8842</span>
+            </div>
+
+            <div class="card-bottom-row">
+              <div class="card-holder-meta">
+                <span class="card-meta-label">CARDHOLDER</span>
+                <span class="card-meta-val" id="cardholder-name-display">ROHAN M.</span>
+              </div>
+              <div class="card-tier-meta">
+                <span class="card-meta-label">TIER</span>
+                <span class="card-meta-val" id="login-card-tier">TITANIUM CAUTION</span>
+              </div>
+              <div class="card-expiry-meta">
+                <span class="card-meta-label">VALID THRU</span>
+                <span class="card-meta-val">08/29</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Badge 1: Credit Score Pill -->
+          <div class="floating-badge badge-score">
+            <div class="badge-icon-wrap score-icon-bg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E3B2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+            </div>
+            <div class="badge-content">
+              <div class="badge-metric-primary">
+                <span class="badge-value-score" id="login-score-val">684</span>
+                <span class="badge-tier-tag" id="login-score-tier">Tier B Caution</span>
+              </div>
+              <span class="badge-sub-label">Consent-Verified Score</span>
+            </div>
+          </div>
+
+          <!-- Floating Badge 2: Monthly Cashflow Stability Growth Card -->
+          <div class="floating-badge badge-growth">
+            <div class="badge-icon-wrap growth-icon-bg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FB88A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            </div>
+            <div class="badge-content">
+              <div class="badge-growth-highlight">
+                <span class="growth-number" id="login-growth-num">+18.4%</span>
+                <span class="growth-period" id="login-growth-period">Monthly Stability</span>
+              </div>
+              <span class="badge-sub-label">180-Day Cash-Flow Velocity</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Visual Panel Feature Highlights List -->
+        <div class="visual-features-grid">
+          <div class="visual-feature-item">
+            <div class="feat-check-dot">✓</div>
+            <div class="feat-info">
+              <strong class="feat-title">Zero Bureau Lock</strong>
+              <span class="feat-desc">Assesses cashflow predictability rather than legacy bureau files.</span>
+            </div>
+          </div>
+          <div class="visual-feature-item">
+            <div class="feat-check-dot">✓</div>
+            <div class="feat-info">
+              <strong class="feat-title">Transparent Explainability</strong>
+              <span class="feat-desc">Shapley mathematical breakdowns with clear adverse action disclosures.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Feature 1: Terms & Account Aggregator Data Governance Modal -->
+  <div id="terms-consent-modal" class="terms-modal-overlay hidden" style="display: none;">
+    <div class="terms-modal-card">
+      <div class="terms-modal-header">
+        <div class="terms-icon-circle">🛡️</div>
+        <div>
+          <h3 class="terms-modal-title">Account Aggregator Consent & Terms</h3>
+          <p class="terms-modal-sub">RBI Master Direction & Digital Personal Data Protection (DPDP) Act 2023</p>
+        </div>
+        <button type="button" id="btn-terms-close" class="btn-terms-close" aria-label="Close Terms">&times;</button>
+      </div>
+
+      <div class="terms-modal-body">
+        <div class="terms-summary-callout">
+          <div class="terms-callout-item">
+            <span class="terms-callout-icon">⏱️</span>
+            <div>
+              <strong>180-Day Financial Horizon</strong>
+              <p>Read-only cashflow telemetry for real-time underwriting.</p>
+            </div>
+          </div>
+          <div class="terms-callout-item">
+            <span class="terms-callout-icon">🔒</span>
+            <div>
+              <strong>Zero Credential Storage</strong>
+              <p>Bank-grade encrypted tokenization. We never see your PIN or passwords.</p>
+            </div>
+          </div>
+          <div class="terms-callout-item">
+            <span class="terms-callout-icon">⚡</span>
+            <div>
+              <strong>Revocable Anytime</strong>
+              <p>One-click consent cancellation via AA handle with zero penalties.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="terms-meta-preview" id="terms-meta-preview">
+          <!-- Dynamic summary populated based on chosen persona -->
+        </div>
+
+        <label class="terms-checkbox-wrap" for="chk-agree-terms">
+          <input type="checkbox" id="chk-agree-terms" checked>
+          <span>I explicitly authorize BCM to ingest 180-day anonymized transaction telemetry via RBI licensed Account Aggregators for instant alternative credit assessment.</span>
+        </label>
+      </div>
+
+      <div class="terms-modal-actions">
+        <button type="button" id="btn-terms-cancel" class="btn-terms-back">Back</button>
+        <button type="button" id="btn-terms-confirm" class="btn-purple-primary">
+          <span>Authorize Telemetry & Enter Dashboard</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="brand-wrapper">
+      <span class="brand-badge">BCM</span>
+      <div class="brand-text-block">
+        <span class="brand-name">Because Credit Matters</span>
+        <span class="brand-tagline">Alternative Credit Intelligence</span>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Stream Indicator -->
+    <div class="telemetry-live-badge hide-mobile">
+      <span class="telemetry-radar-dot"></span>
+      <span class="telemetry-status-text">Telemetry Stream: <strong>LIVE</strong></span>
+      <span class="telemetry-meta-sep">•</span>
+      <span class="telemetry-sub-meta">4 Nodes (14ms)</span>
+    </div>
+
+    <!-- Right Side Top Nav Controls -->
+    <div class="perspective-toggle-container">
+      <!-- Active User Session Pill -->
+      <div id="user-session-bar" class="user-session-pill hidden">
+        <span class="user-avatar-icon">👤</span>
+        <span id="user-session-details">Alex Turner • alex.turner@bcmcredit.io (Fintech Risk Analyst)</span>
+        <button id="btn-logout" class="btn-logout" title="Lock & Switch Account">Logout</button>
+      </div>
+
+      <!-- Borrower vs Bank Segmented Switcher -->
+      <div class="toggle-capsule" role="tablist">
+        <button id="toggle-borrower" class="toggle-btn active" role="tab" aria-selected="true">
+          <span>Borrower View</span>
+        </button>
+        <button id="toggle-lender" class="toggle-btn" role="tab" aria-selected="false">
+          <span data-i18n="lender_view">Bank / Underwriter</span>
+        </button>
+      </div>
+
+      <!-- Language Toggle Pill [ EN | हिंदी ] -->
+      <div class="lang-toggle-capsule" role="group" aria-label="Language Selector">
+        <button id="lang-en" class="lang-btn active" type="button" title="English">EN</button>
+        <button id="lang-hi" class="lang-btn" type="button" title="हिंदी">हिंदी</button>
+      </div>
+
+      <!-- Terms & AA Governance Pill -->
+      <button id="btn-nav-terms" class="nav-terms-pill" type="button" title="View Terms & Consent">
+        <span>🛡️ Terms</span>
+      </button>
+
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span data-i18n="engine_active">Engine Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Portal (Locked until login is verified) -->
+  <main id="main-portal" class="app-container portal-locked">
+
+    <!-- Editorial Hero Section -->
+    <section class="editorial-hero">
+      <div class="hero-meta-strip">
+        <span class="meta-tag-pill">BCM / CREDIT INTELLIGENCE</span>
+        <span class="meta-divider">•</span>
+        <span class="meta-text" id="hero-profile-tag">PROFILE: GIG MOBILITY PARTNER</span>
+        <span class="meta-divider">•</span>
+        <span class="meta-text">ANALYSIS WINDOW: 180 DAYS</span>
+      </div>
+      <h1 class="editorial-title" data-i18n="hero_title">Your financial behavior,<br><span class="title-highlight">explained.</span></h1>
+      <p class="editorial-subtitle" data-i18n="hero_subtitle">
+        Alternative credit intelligence built from real, verified financial behavior — eliminating bureau lockouts through consent-driven cashflow telemetry.
+      </p>
+    </section>
+
+    <!-- Horizontal Persona Selector -->
+    <section class="preset-bar">
+      <div class="preset-header-info">
+        <span class="preset-title" data-i18n="preset_title">Select Preset Profile</span>
+        <span class="preset-subtitle" data-i18n="preset_subtitle">Instant Switch Archetypes</span>
+      </div>
+      <div class="preset-pills">
+        <button class="persona-btn selected" data-preset="gig_worker">
+          <span class="persona-emoji">🛵</span>
+          <div class="persona-meta">
+            <div class="persona-top-line">
+              <span class="persona-role-title">Rohan M.</span>
+              <span class="persona-score-badge">734 Tier B</span>
+              <span class="triage-pill yellow">🟡 Caution</span>
+            </div>
+            <span class="persona-subtag">Gig Mobility Partner</span>
+          </div>
+        </button>
+        <button class="persona-btn" data-preset="kirana_merchant">
+          <span class="persona-emoji">🏪</span>
+          <div class="persona-meta">
+            <div class="persona-top-line">
+              <span class="persona-role-title">Sunita K.</span>
+              <span class="persona-score-badge prime">785 Tier A</span>
+              <span class="triage-pill green">🟢 Prime</span>
+            </div>
+            <span class="persona-subtag">Kirana Micro-Merchant</span>
+          </div>
+        </button>
+        <button class="persona-btn" data-preset="thin_file_fresher">
+          <span class="persona-emoji">🎓</span>
+          <div class="persona-meta">
+            <div class="persona-top-line">
+              <span class="persona-role-title">Aarav S.</span>
+              <span class="persona-score-badge">710 Tier B</span>
+              <span class="triage-pill green">🟢 Prime</span>
+            </div>
+            <span class="persona-subtag">Thin-File Young Pro</span>
+          </div>
+        </button>
+        <button class="persona-btn" data-preset="seasonal_trader">
+          <span class="persona-emoji">🌾</span>
+          <div class="persona-meta">
+            <div class="persona-top-line">
+              <span class="persona-role-title">Vikram R.</span>
+              <span class="persona-score-badge warn">618 Tier C</span>
+              <span class="triage-pill red">🔴 Deficit</span>
+            </div>
+            <span class="persona-subtag">Seasonal Produce Trader</span>
+          </div>
+        </button>
+        <!-- Feature 2: 5th Preset Slot (Custom Sandbox Simulator with subtle pulsing sage border) -->
+        <button class="persona-btn custom-sandbox-btn" data-preset="custom_sandbox">
+          <span class="persona-emoji">✨</span>
+          <div class="persona-meta">
+            <div class="persona-top-line">
+              <span class="persona-role-title">+ Custom Simulator</span>
+              <span class="persona-score-badge prime" id="custom-pill-score">720 Tier A</span>
+              <span class="triage-pill green" id="custom-pill-triage">🟢 Green</span>
+            </div>
+            <span class="persona-subtag">Live Sandbox Mode</span>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Feature 2: Live Parameter Tuning Drawer (Inline collapsible drawer when 5th slot is active) -->
+    <section id="sandbox-tuning-drawer" class="sandbox-tuning-drawer hidden">
+      <div class="sandbox-drawer-header">
+        <div class="sandbox-title-cluster">
+          <span class="sandbox-sparkle-pill">✨ Interactive Underwriting Sandbox</span>
+          <h3 class="sandbox-heading">Live Cashflow Parameter Tuning Engine</h3>
+          <p class="sandbox-sub">
+            Adjust telemetry sliders in real-time. Watch BCM's 300–900 scoring algorithm, triage gate, and 7-day statement ledger react dynamically.
+          </p>
+        </div>
+        <div class="sandbox-status-cluster">
+          <div class="sandbox-score-preview">
+            <span class="score-sm-lbl">Live Sandbox Score:</span>
+            <span id="sandbox-live-score" class="score-sm-val">720</span>
+          </div>
+          <div id="sandbox-live-triage" class="sandbox-triage-badge green">
+            <span class="s-dot">●</span>
+            <span id="sandbox-live-triage-text">🟢 Auto-Sanction STP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sandbox-controls-grid">
+        <!-- Control 1: Daily Revenue / Inflow Slider -->
+        <div class="sandbox-control-card">
+          <div class="control-label-row">
+            <label class="c-label">Daily Revenue / Inflow</label>
+            <span id="lbl-sandbox-revenue" class="c-val">₹2,500 / day</span>
+          </div>
+          <input type="range" id="slider-sandbox-revenue" class="custom-range" min="500" max="30000" step="250" value="2500">
+          <div class="slider-ticks">
+            <span>₹500</span>
+            <span>₹10,000</span>
+            <span>₹20,000</span>
+            <span>₹30,000</span>
+          </div>
+        </div>
+
+        <!-- Control 2: Inflow Volatility -->
+        <div class="sandbox-control-card">
+          <div class="control-label-row">
+            <label class="c-label">Inflow Volatility (CV)</label>
+            <span id="lbl-sandbox-volatility" class="c-val">Low (0.15)</span>
+          </div>
+          <div class="segmented-control" id="seg-sandbox-volatility">
+            <button type="button" class="seg-btn active" data-val="low">Low (0.15)</button>
+            <button type="button" class="seg-btn" data-val="medium">Medium (0.42)</button>
+            <button type="button" class="seg-btn" data-val="high">High (0.85)</button>
+          </div>
+          <div class="control-hint">High volatility penalizes cashflow predictability.</div>
+        </div>
+
+        <!-- Control 3: Mandate / NACH Bounces -->
+        <div class="sandbox-control-card">
+          <div class="control-label-row">
+            <label class="c-label">Mandate / NACH Bounces (90d)</label>
+            <span id="lbl-sandbox-bounces" class="c-val">0 Bounces</span>
+          </div>
+          <div class="segmented-control" id="seg-sandbox-bounces">
+            <button type="button" class="seg-btn active" data-val="0">0 Bounces</button>
+            <button type="button" class="seg-btn" data-val="1">1 Delay</button>
+            <button type="button" class="seg-btn" data-val="2">2+ Bounces</button>
+          </div>
+          <div class="control-hint">≥2 bounces immediately triggers Red Credit Gate Lock.</div>
+        </div>
+
+        <!-- Control 4: Free Surplus Margin (DSCR Headroom) -->
+        <div class="sandbox-control-card">
+          <div class="control-label-row">
+            <label class="c-label">Free Surplus Margin (DSCR)</label>
+            <span id="lbl-sandbox-surplus" class="c-val">35% Surplus</span>
+          </div>
+          <input type="range" id="slider-sandbox-surplus" class="custom-range" min="10" max="50" step="5" value="35">
+          <div class="slider-ticks">
+            <span>10% (Tight)</span>
+            <span>25% (Balanced)</span>
+            <span>40%</span>
+            <span>50% (High)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Context Adjustment Sub-Panel (Collapsible / Toggleable) -->
+      <div class="sandbox-student-addon" id="sandbox-student-addon">
+        <div class="addon-toggle-row">
+          <label class="toggle-checkbox-label" for="chk-student-mode">
+            <input type="checkbox" id="chk-student-mode">
+            <span class="toggle-switch-slider"></span>
+            <strong>🎓 Enable Student / Gen-Z Proxy Underwriting Matrix</strong>
+          </label>
+          <span class="addon-sub-tag">Adjust for Monthly Allowance & Family Tier</span>
+        </div>
+
+        <div class="student-addon-controls hidden" id="student-addon-controls">
+          <div class="sandbox-control-card">
+            <div class="control-label-row">
+              <label class="c-label">Monthly Pocket Money / Stipend</label>
+              <span id="lbl-sandbox-stipend" class="c-val">₹12,000 / mo</span>
+            </div>
+            <input type="range" id="slider-sandbox-stipend" class="custom-range" min="2000" max="40000" step="1000" value="12000">
+            <div class="slider-ticks">
+              <span>₹2,000</span>
+              <span>₹15,000</span>
+              <span>₹30,000</span>
+              <span>₹40,000</span>
+            </div>
+          </div>
+
+          <div class="sandbox-control-card">
+            <div class="control-label-row">
+              <label class="c-label">Family Economic Tier</label>
+              <span id="lbl-sandbox-family" class="c-val">₹3L – ₹8L / yr</span>
+            </div>
+            <div class="segmented-control" id="seg-sandbox-family">
+              <button type="button" class="seg-btn" data-val="low">&lt; ₹3L</button>
+              <button type="button" class="seg-btn active" data-val="mid">₹3L – ₹8L</button>
+              <button type="button" class="seg-btn" data-val="high">&gt; ₹8L</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reactive Output Quick Telemetry Summary -->
+      <div class="sandbox-quick-bar">
+        <div class="q-stat">
+          <span class="q-lbl">Calculated DSCR:</span>
+          <span id="sandbox-q-dscr" class="q-val green">1.54x</span>
+        </div>
+        <div class="q-stat">
+          <span class="q-lbl">Recommended Limit:</span>
+          <span id="sandbox-q-limit" class="q-val">₹8,500</span>
+        </div>
+        <div class="q-stat">
+          <span class="q-lbl">Estimated APR:</span>
+          <span id="sandbox-q-apr" class="q-val">12.2%</span>
+        </div>
+        <div class="q-stat">
+          <span class="q-lbl">Underwriting Action:</span>
+          <span id="sandbox-q-action" class="q-val green">Auto-Sanction STP</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Headline Card -->
+    <section class="profile-meta-card">
+      <div class="profile-left-cluster">
+        <div class="profile-avatar-badge" id="profile-avatar">RM</div>
+        <div class="profile-info">
+          <div class="name-row">
+            <h2 id="profile-name">Rohan M.</h2>
+            <span class="kyc-badge" data-i18n="consent_verified">Consent Verified</span>
+          </div>
+          <p id="profile-role">Platform Mobility & Delivery Partner • High payment discipline with volatile weekly gig disbursements</p>
+        </div>
+      </div>
+      <div class="profile-right-cluster">
+        <span id="profile-triage-badge" class="triage-headline-badge yellow">🟡 YELLOW: Caution</span>
+        <span id="human-review-badge" class="human-review-tag clear">✓ Automated Clearance</span>
+      </div>
+    </section>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid">
+
+      <!-- Left Column: Hero Score Card & What-If Slider -->
+      <div class="left-col">
+
+        <!-- Hero Credit Score Visualizer -->
+        <div class="hero-score-card">
+          <div class="hero-card-header">
+            <div class="score-badge-header-group">
+              <span class="score-badge-header" data-i18n="score_header">Alternative Credit Score</span>
+              <span class="score-live-tag" data-i18n="score_live">● REAL-TIME</span>
+            </div>
+            <div id="decision-stamp" class="financial-decision-stamp stamp-approved">
+              <span class="stamp-meta">BCM UNDERWRITING</span>
+              <span class="stamp-text">APPROVED</span>
+            </div>
+          </div>
+          
+          <div class="score-circle-wrapper">
+            <div class="score-radial-glow" id="score-radial-glow"></div>
+            <svg class="score-svg" viewBox="0 0 190 190">
+              <circle class="score-bg-circle" cx="95" cy="95" r="80"></circle>
+              <!-- Secondary Electric Blue Projection Ghost Arc -->
+              <circle id="score-circle-ghost" class="score-ghost-circle" cx="95" cy="95" r="80"></circle>
+              <!-- Primary Brand Green Base Score Arc -->
+              <circle id="score-circle-progress" class="score-progress-circle" cx="95" cy="95" r="80"></circle>
+            </svg>
+            <div class="score-center-content">
+              <span id="score-val" class="score-number">734</span>
+              <!-- Live Electric Blue Projected Value Badge with animated delta -->
+              <div id="score-projected-badge" class="score-projected-badge hidden">
+                <span class="proj-label" data-i18n="score_projected">Projected:</span>
+                <span id="score-proj-num">780</span>
+                <span id="score-proj-delta" class="proj-delta">(+46 pts)</span>
+              </div>
+              <span class="score-sublabel" data-i18n="score_range">RANGE 300 - 850</span>
+            </div>
+          </div>
+
+          <div class="tier-container">
+            <span id="tier-pill" class="score-tier-pill">Tier B Near Prime</span>
+          </div>
+
+          <div class="score-metrics-row">
+            <div class="metric-mini-item">
+              <label data-i18n="rec_line">Recommended Line</label>
+              <div id="rec-limit" class="val">₹6,500</div>
+            </div>
+            <div class="metric-mini-item">
+              <label data-i18n="indicative_apr">Indicative APR</label>
+              <div id="indicative-apr" class="val">14.8%</div>
+            </div>
+            <div class="metric-mini-item">
+              <label data-i18n="confidence">Confidence</label>
+              <div id="confidence-score" class="val">92%</div>
+            </div>
+          </div>
+
+          <!-- Mini Sparkline Trajectory Indicator -->
+          <div class="trajectory-row">
+            <span class="trajectory-label" data-i18n="trajectory_label">180-Day Trajectory</span>
+            <div class="mini-sparkline">
+              <svg viewBox="0 0 80 20" class="sparkline-svg">
+                <path d="M0,16 Q20,14 40,8 T80,4" fill="none" stroke="var(--bcm-sage)" stroke-width="2.5" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <span class="trajectory-badge">+42 pts projected ▲</span>
+          </div>
+
+        </div>
+
+        <!-- The "What-If" Sensitivity Simulator -->
+        <div class="what-if-card">
+          <div class="what-if-header">
+            <div>
+              <span class="what-if-title" data-i18n="what_if_title">What could improve your score?</span>
+              <div class="what-if-sub" data-i18n="what_if_sub">Slide behaviors to project credit expansion</div>
+            </div>
+            <span id="sim-delta-badge" class="sim-delta-badge">Baseline</span>
+          </div>
+
+          <!-- Celebration Banner on Tier A Unlock -->
+          <div id="tier-a-celebration-banner" class="celebration-banner hidden">
+            <span class="celebration-star">✨</span>
+            <div>
+              <strong>Prime Tier A Unlocked!</strong>
+              <div class="celebration-sub">Lowest APR & maximum credit line ceiling available.</div>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span data-i18n="buffer_label">Increase Liquidity Buffer</span>
+              <span id="val-buffer" class="val">+0 Days</span>
+            </div>
+            <input type="range" id="slider-buffer" class="custom-range" min="0" max="30" step="5" value="0">
+            <div class="slider-ticks">
+              <span>0d</span>
+              <span>+10d</span>
+              <span>+20d</span>
+              <span>+30d</span>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span data-i18n="discipline_label">Improve Payment Discipline</span>
+              <span id="val-discipline" class="val">+0%</span>
+            </div>
+            <input type="range" id="slider-discipline" class="custom-range" min="0" max="15" step="2.5" value="0">
+            <div class="slider-ticks">
+              <span>0%</span>
+              <span>+5%</span>
+              <span>+10%</span>
+              <span>+15%</span>
+            </div>
+          </div>
+
+          <div class="sim-projection-box">
+            <div class="proj-item">
+              <div class="proj-stat" data-i18n="proj_score">Projected Score</div>
+              <div id="proj-score" class="proj-val">734</div>
+            </div>
+            <div class="proj-item">
+              <div class="proj-stat" data-i18n="proj_apr">Est. APR</div>
+              <div id="proj-apr" class="proj-val">14.8%</div>
+            </div>
+            <div class="proj-item">
+              <div class="proj-stat" data-i18n="proj_ceiling">Credit Ceiling</div>
+              <div id="proj-limit" class="proj-val">₹6,500</div>
+            </div>
+          </div>
+
+          <!-- Live Annual Interest Savings Counter -->
+          <div class="savings-ticker-box">
+            <div class="savings-icon">💡</div>
+            <div class="savings-text">
+              <span class="savings-title" data-i18n="savings_title">Estimated Annual Interest Saved</span>
+              <span id="proj-savings" class="savings-amount">₹0 / year</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive Content Switchable by Perspective -->
+      <div class="right-col">
+
+        <!-- FEATURE: Bank Statement Financial Health Triage (Green / Yellow / Red) -->
+        <section id="bank-statement-triage-card" class="triage-main-card YELLOW">
+          
+          <div class="triage-header-block">
+            <div class="triage-title-group">
+              <div class="triage-feature-tag">
+                <span>🛡️ Underwriting Triage Engine</span>
+                <span>•</span>
+                <span>Weekly & Monthly Ledger Ingestion</span>
+              </div>
+              <h3 class="triage-feature-title">Bank Statement Financial Health Triage</h3>
+              <p class="triage-feature-sub">
+                Automated deterministic traffic-light risk classification derived from 180-day ledger telemetry and time-series cashflow aggregations.
+              </p>
+            </div>
+            
+            <div class="traffic-light-display" id="main-traffic-light">
+              <span id="main-traffic-bulb" class="traffic-bulb bulb-yellow"></span>
+              <span id="main-traffic-label" class="traffic-label">🟡 YELLOW (Moderate Risk / Caution)</span>
+            </div>
+          </div>
+
+          <!-- Automated Deterministic Action Callout -->
+          <div id="main-triage-action-box" class="triage-action-box YELLOW">
+            <div class="triage-action-icon" id="main-triage-action-icon">⚠️</div>
+            <div class="triage-action-content">
+              <div class="action-tag">Deterministic Automated Action</div>
+              <div class="action-main-text" id="main-triage-action-text">
+                Conditional sanction with tranche-based drawdowns and daily auto-debit collection.
+              </div>
+            </div>
+          </div>
+
+          <!-- Deterministic Criteria Checklist Grid -->
+          <div class="triage-criteria-grid" id="main-triage-criteria-grid">
+            <div class="criteria-mini-card">
+              <div class="criteria-mini-info">
+                <div class="c-label">DSCR Coverage</div>
+                <div class="c-target" id="crit-dscr-target">1.0x ≤ DSCR &lt; 1.5x</div>
+              </div>
+              <span id="crit-dscr-val" class="criteria-pill-status warn">1.28x</span>
+            </div>
+
+            <div class="criteria-mini-card">
+              <div class="criteria-mini-info">
+                <div class="c-label">Weekly Volatility</div>
+                <div class="c-target" id="crit-vol-target">0.35 to 0.65</div>
+              </div>
+              <span id="crit-vol-val" class="criteria-pill-status warn">0.432</span>
+            </div>
+
+            <div class="criteria-mini-card">
+              <div class="criteria-mini-info">
+                <div class="c-label">Debit / NACH Bounces</div>
+                <div class="c-target" id="crit-bounces-target">≤ 1 delay in 90d</div>
+              </div>
+              <span id="crit-bounces-val" class="criteria-pill-status warn">1 delay</span>
+            </div>
+
+            <div class="criteria-mini-card">
+              <div class="criteria-mini-info">
+                <div class="c-label">Positive Surplus Weeks</div>
+                <div class="c-target" id="crit-surplus-target">Controlled Deficits</div>
+              </div>
+              <span id="crit-surplus-val" class="criteria-pill-status warn">66.7%</span>
+            </div>
+          </div>
+
+          <!-- Structured Advisory Checklist for RED (Displayed when Red) -->
+          <div id="main-triage-advisory" class="triage-advisory-wrapper hidden">
+            <div class="triage-advisory-title">
+              <span>📋</span>
+              <span>Structured Advisory Checklist to Repair Liquidity Runway</span>
+            </div>
+            <div class="triage-advisory-steps" id="main-triage-advisory-steps">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+
+          <!-- Statement Aggregation Explorer (Weekly & Monthly) -->
+          <div class="triage-aggregation-box">
+            <div class="triage-agg-head">
+              <span class="triage-agg-title">Audited Statement Aggregations Telemetry</span>
+              <div class="triage-agg-toggle">
+                <button type="button" id="btn-triage-weekly" class="triage-toggle-btn active" onclick="switchTriageTable('weekly')">Weekly (12 Weeks)</button>
+                <button type="button" id="btn-triage-monthly" class="triage-toggle-btn" onclick="switchTriageTable('monthly')">Monthly (3 Months)</button>
+              </div>
+            </div>
+
+            <div class="triage-table-responsive">
+              <table class="triage-mini-table">
+                <thead>
+                  <tr id="triage-table-head">
+                    <th>Period</th>
+                    <th>Inflow</th>
+                    <th>Outflow</th>
+                    <th>Debt Service</th>
+                    <th>Net Surplus</th>
+                    <th>Status</th>
+                    <th>Bounces</th>
+                  </tr>
+                </thead>
+                <tbody id="triage-table-body">
+                  <!-- Dynamically populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Borrower View: Transparent Behavioral Breakdown Cards -->
+        <section id="borrower-view-section" class="borrower-view">
+
+          
+          <!-- Specification 3: AI Financial Recovery Blueprint Card -->
+          <div id="ai-recovery-blueprint" class="recovery-blueprint-card hidden">
+            <div class="blueprint-header">
+              <div class="blueprint-title-group">
+                <div class="blueprint-tag-pill">
+                  <span class="blueprint-sparkle">⚡</span>
+                  <span data-i18n="blueprint_badge">AI Recovery Intelligence</span>
+                </div>
+                <h3 class="blueprint-title" data-i18n="blueprint_heading">AI Financial Health & Recovery Plan</h3>
+                <p class="blueprint-sub" data-i18n="blueprint_sub">Prescriptive, telemetry-driven actions to clear halts and unlock Tier A credit lines.</p>
+              </div>
+              <span id="blueprint-status-tag" class="blueprint-status-tag priority" data-i18n="blueprint_priority">Priority Action Required</span>
+            </div>
+            <div id="blueprint-actions-list" class="blueprint-actions-grid">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <h3 class="section-title" data-i18n="drivers_heading">What drives your score</h3>
+              <p class="section-sub" data-i18n="drivers_sub">
+                Transparent Shapley feature attribution derived from verified banking telemetry. Click any card to expand math & regulatory disclosures.
+              </p>
+            </div>
+            <span class="shapley-pill" data-i18n="shapley_pill">Shapley Additive Attribution</span>
+          </div>
+
+          <div id="factors-list" class="factors-grid">
+            <!-- Dynamically populated via app.js with interactive accordion click -->
+          </div>
+        </section>
+
+        <!-- Bank View: Underwriting Policy & Audit Triage -->
+        <section id="lender-view-section" class="lender-view hidden">
+          
+          <!-- Specification 4: Bank Manual Override & Audit Triage Toolbar -->
+          <div class="underwriter-override-card">
+            <div class="override-header">
+              <div>
+                <div class="override-badge-pill" data-i18n="override_badge">Manual Underwriter Decisioning</div>
+                <h4 class="override-title" data-i18n="override_heading">Underwriter Decision Override & Policy Triage</h4>
+                <p class="override-sub" data-i18n="override_sub">Enforce risk halts, grant policy exceptions, or request credit enhancement guarantees.</p>
+              </div>
+              <div class="override-current-state">
+                <span class="state-label" data-i18n="override_active_state">Active Clearance:</span>
+                <span id="override-state-badge" class="state-badge approved">Automated Approval</span>
+              </div>
+            </div>
+            <div class="override-actions-bar">
+              <button id="btn-override-approve" class="btn-override approve" type="button">
+                <span class="btn-icon">✓</span>
+                <span data-i18n="btn_approve_exception">Approve Exception</span>
+              </button>
+              <button id="btn-override-guarantor" class="btn-override guarantor" type="button">
+                <span class="btn-icon">🛡️</span>
+                <span data-i18n="btn_request_guarantor">Request Bridge Guarantor</span>
+              </button>
+              <button id="btn-override-halt" class="btn-override halt" type="button">
+                <span class="btn-icon">⚠️</span>
+                <span data-i18n="btn_enforce_halt">Enforce Underwriter Halt</span>
+              </button>
+            </div>
+            <!-- Underwriter Audit Justification Log -->
+            <div class="override-audit-container">
+              <div class="audit-log-head">
+                <span class="audit-icon">📜</span>
+                <span data-i18n="audit_log_title">Underwriter Audit Justification & Timestamped Ledger</span>
+              </div>
+              <div id="underwriter-audit-log" class="audit-log-entries">
+                <div class="audit-entry initial">
+                  <span class="audit-time">2026-09-19 22:45:00</span>
+                  <span class="audit-code">[SYS-INIT-01]</span>
+                  <span class="audit-text">Baseline risk scorecard ingested via RBI Account Aggregator protocol. Automated policy rules verified.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <h3 class="section-title" data-i18n="policy_heading">Underwriting Decision Rules & Risk Policy</h3>
+              <p class="section-sub" data-i18n="policy_sub">
+                Institutional deterministic rule gates and policy exception criteria evaluated by BCM Engine.
+              </p>
+            </div>
+            <span class="shapley-pill" data-i18n="audit_trail_pill">Audit Trail Engine</span>
+          </div>
+
+          <div class="policy-table-card">
+            <div id="policy-rules-list">
+              <!-- Dynamically populated via app.js -->
+            </div>
+            <div class="underwriter-notes-box">
+              <div class="notes-header">
+                <span class="notes-icon">📝</span>
+                <span class="notes-title">Underwriting Committee Recommendation</span>
+              </div>
+              <p id="underwriter-notes" class="notes-body"></p>
+            </div>
+          </div>
+
+          <!-- Normalized Transaction Stream Inspection -->
+          <div class="tx-table-card">
+            <div class="section-head" style="margin-bottom: 14px;">
+              <div>
+                <h4 class="section-title" style="font-size: 16px;">180-Day Transaction Telemetry Ledger</h4>
+                <p class="section-sub" style="font-size: 11px;">Verified Account Aggregator normalized banking events.</p>
+              </div>
+              <span class="verified-ledger-tag">
+                AA Verified (180d)
+              </span>
+            </div>
+            <div class="table-responsive">
+              <table class="tx-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Merchant / Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Running Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="tx-table-body">
+                  <!-- Dynamically populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="bcm-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-meta">
+        <span class="footer-brand-badge">BCM</span>
+        <span><strong>Because Credit Matters</strong> &bull; Alternative Credit Intelligence for the Underserved</span>
+      </div>
+      <span class="footer-tag">Consent-Driven Financial Telemetry &bull; RBI AA & DPDP Act 2023 Compliant</span>
+    </div>
+  </footer>
+
+  <!-- Floating Action Toast Notification Container -->
+  <div id="bcm-toast-container" class="bcm-toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
