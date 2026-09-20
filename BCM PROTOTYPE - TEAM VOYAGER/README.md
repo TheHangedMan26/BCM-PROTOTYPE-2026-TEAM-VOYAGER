@@ -1,4 +1,4 @@
-# BCM — Because Credit Matters
+# BCM - Because Credit Matters
 > **Consent-driven alternative credit intelligence & bank statement financial health triage for underserved borrowers.**
 
 ---
@@ -30,21 +30,7 @@ If you don't have Python or want to test instantly:
 
 ---
 
-## 🔑 Demo Accounts (One-Click Login)
 
-You can click any **⚡ Demo Account pill** on the login screen to auto-fill credentials instantly, or use the accounts below:
-
-| Role / Segment | Name | Email | Password | Triage Flag |
-| :--- | :--- | :--- | :--- | :--- |
-| 🏦 **Bank Underwriter** | Alex Turner | `alex.turner@bcmcredit.io` | `Password123!` | *Underwriter Console* |
-| 🛵 **Gig Worker** | Rohan M. | `rohan.m@bcmcredit.io` | `Password123!` | 🟡 **YELLOW** (Caution) |
-| 🏪 **Kirana Store Owner** | Sunita K. | `sunita.k@bcmcredit.io` | `Password123!` | 🟢 **GREEN** (Prime) |
-| 🎓 **Student / Gen-Z** | Aarav S. | `aarav.s@bcmcredit.io` | `Password123!` | 🟢 **GREEN** (Prime) |
-| 🌾 **Agri Produce Trader** | Vikram R. | `vikram.r@bcmcredit.io` | `Password123!` | 🔴 **RED** (Cash Deficit) |
-
-> 💡 **Shortcut**: Click **"Sign In"** without typing anything to immediately log into the active demo profile!
-
----
 
 ## 🧭 Key Features to Explore
 
